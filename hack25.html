@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysian Heritage Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="hack25.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>MENEROKA MALAYSIA</h1>
+            <p>Discover the rich cultural culture of Malaysia</p>
+        </div>
+    </header>
+<button class="back-btn" onclick="window.location.href='map.html'">&larr; Back</button>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#heritage-sites">Heritage Sites</a></li>
+                <li><a href="#events">Cultural Events</a></li>
+                <li><a href="#recipes">Traditional Recipes</a></li>
+                <li><a href="#language">Language Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="heritage-sites" class="feature-section">
+            <h2><i class="fas fa-landmark"></i> Heritage Sites</h2>
+            <div class="search-container">
+                <input type="text" id="site-search" placeholder="Search heritage sites...">
+                <button id="search-btn">Search</button>
+            </div>
+            <div class="filter-container">
+                <select id="state-filter">
+
+                    
+                    <option value="penang">Penang</option>
+                    <option value="malacca">Malacca</option>
+                    <option value="perak">Perak</option>
+                    <option value="sabah">Sabah</option>
+                    <option value="sarawak">Sarawak</option>
+                    <option value="selangor">Selangor</option>
+                    <option value="kuala lumpur">Kuala Lumpur</option>
+                    <option value="kelantan">Kelantan</option>
+                    <option value="kedah">Kedah</option>
+
+                </select>
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="unesco">UNESCO Sites</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="nature">Natural Heritage</option>
+                </select>
+            </div>
+            <div id="sites-container" class="card-container"></div>
+        </section>
+
+        <section id="events" class="feature-section">
+            <h2><i class="fas fa-calendar-alt"></i> Cultural Events</h2>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="current-month">June 2025</h3>
+                    <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+            <div id="events-list" class="card-container"></div>
+        </section>
+
+        <section id="recipes" class="feature-section">
+            <h2><i class="fas fa-utensils"></i> Traditional Recipes</h2>
+            <div class="recipe-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="malay">Malay</button>
+                <button class="category-btn" data-category="chinese">Chinese</button>
+                <button class="category-btn" data-category="indian">Indian</button>
+                <button class="category-btn" data-category="borneo">Borneo</button>
+            </div>
+            <div id="recipes-container" class="card-container"></div>
+            <div id="recipe-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h3 id="modal-recipe-title"></h3>
+                    <div class="recipe-details">
+                        <div class="recipe-image-container">
+                            <img id="modal-recipe-image" src="" alt="">
+                        </div>
+                        <div class="recipe-info">
+                            <h4>Ingredients</h4>
+                            <ul id="modal-recipe-ingredients"></ul>
+                            <h4>Instructions</h4>
+                            <ol id="modal-recipe-instructions"></ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="language" class="feature-section">
+            <h2><i class="fas fa-language"></i> Language Guide</h2>
+            <div class="language-tabs">
+                <button class="tab-btn active" data-language="malay">Malay</button>
+                <button class="tab-btn" data-language="chinese">Chinese</button>
+                <button class="tab-btn" data-language="tamil">Tamil</button>
+                <button class="tab-btn" data-language="iban">Iban</button>
+            </div>
+            <div class="language-content">
+                <div class="phrase-container">
+                    <h3>Common Phrases</h3>
+                    <div id="phrases-list"></div>
+                </div>
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <div id="quiz-question"></div>
+                    <div id="quiz-options" class="options-container"></div>
+                    <button id="next-quiz-btn">Next Question</button>
+                    <div id="quiz-feedback"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Malaysian Heritage Explorer</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+    <link rel="stylesheet" href="hack25.css">
+
+    
+
+    <script src="hack25.js"></script>
+</body>
+</html>

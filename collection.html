@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Card Collection</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="map.css" />
+  <style>
+    .collection-header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      border-radius: 0 0 16px 16px;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.2rem;
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .collection-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      padding: 0.5rem 0.5rem 1rem 0.5rem;
+    }
+    .collection-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #eee;
+      margin-bottom: 0.7rem;
+    }
+    .collection-count {
+      text-align: center;
+      margin: 1.5rem 0 0.5rem 0;
+      font-size: 1.1rem;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+    .collected-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--secondary);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 10px;
+      border-radius: 6px;
+      letter-spacing: 1px;
+    }
+    .not-collected {
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+    .back-btn {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      background: var(--secondary);
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 999;
+    }
+    @media (max-width: 600px) {
+      .collection-grid {padding: 1rem;}
+      .collection-header {font-size: 1.3rem;}
+      .collection-card img {width: 80px;height: 80px;}
+    }
+  </style>
+</head>
+<body>
+ <button class="back-btn" onclick="window.location.href='map.html'">&larr; Back</button>
+  <div class="collection-header">My Site Card Collection</div>
+  <div class="collection-count" id="collection-count"></div>
+  <div class="collection-grid" id="collection-grid">
+    <!-- Cards will be rendered here -->
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvLUbC6g9XsfoB654QrZCu2UqPqRDvO4o",
+      authDomain: "mapdata-733a6.firebaseapp.com",
+      projectId: "mapdata-733a6",
+      storageBucket: "mapdata-733a6.appspot.com",
+      messagingSenderId: "55843897975",
+      appId: "1:55843897975:web:343706cd2740d79643fc72",
+      measurementId: "G-4BCNS0ZJ15"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function fixImageUrl(url) {
+      if (!url) return null;
+      if (url.includes('/file/d/')) {
+        return url.replace('/file/d/', '/uc?export=view&id=').split('/view')[0];
+      }
+      if (url.includes('drive.google.com/open?id=')) {
+        const id = url.split('open?id=')[1].split('&')[0];
+        return `https://drive.google.com/uc?export=view&id=${id}`;
+      }
+      if (url.includes('drive.google.com') && url.includes('/d/')) {
+        const id = url.split('/d/')[1].split('/')[0];
+        return `https://drive.google.com/uc?export=view&id=${id}`;
+      }
+      return url;
+    }
+
+    async function renderCollection() {
+      const grid = document.getElementById('collection-grid');
+      grid.innerHTML = "<div>Loading...</div>";
+      try {
+        const querySnapshot = await getDocs(collection(db, "culturalSites"));
+        let sites = [];
+        for (const doc of querySnapshot.docs) {
+          let site = doc.data();
+          site.id = doc.id;
+          sites.push(site);
+        }
+        renderCards(sites);
+      } catch (e) {
+        grid.innerHTML = "<div>Error loading collection.</div>";
+      }
+    }
+
+    function renderCards(sites) {
+      const grid = document.getElementById('collection-grid');
+      const count = document.getElementById('collection-count');
+      // Simulate collected: none collected
+      let collectedIds = []; // Empty array for demo: 0 collected
+      count.textContent = `${collectedIds.length}/${sites.length} collected`;
+      grid.innerHTML = '';
+      for (const site of sites) {
+        const collected = collectedIds.includes(site.id);
+        const imgClass = collected ? "" : "not-collected";
+        grid.innerHTML += `
+          <div class="collection-card">
+            <img src="${fixImageUrl(site.imageUrl) || ''}" alt="" class="${imgClass}" onerror="this.style.background='#eee';this.src='';">
+            ${collected ? `<span class="collected-badge">Collected</span>` : ''}
+          </div>
+        `;
+      }
+    }
+
+    renderCollection();
+  </script>
+</body>
+</html>

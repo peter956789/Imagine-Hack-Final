@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Discover Sites</title>
+  <meta name="viewport" content="width=400,initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="discover.css"/>
+</head>
+<body>
+  <button class="back-btn" onclick="window.location.href='map.html'">&larr; Back</button>
+  <div class="discover-header">Discover Malaysia's Sites</div>
+  <div class="swiper-container">
+    <div class="swiper-wrapper" id="swiper-wrapper"></div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvLUbC6g9XsfoB654QrZCu2UqPqRDvO4o",
+      authDomain: "mapdata-733a6.firebaseapp.com",
+      projectId: "mapdata-733a6",
+      storageBucket: "mapdata-733a6.appspot.com",
+      messagingSenderId: "55843897975",
+      appId: "1:55843897975:web:343706cd2740d79643fc72",
+      measurementId: "G-4BCNS0ZJ15"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Haversine formula to calculate distance in km
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2-lat1) * Math.PI/180;
+      const dLon = (lon2-lon1) * Math.PI/180;
+      const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    function fixImageUrl(url) {
+      if (!url) return null;
+      if (url.includes('/file/d/')) {
+        return url.replace('/file/d/', '/uc?export=view&id=').split('/view')[0];
+      }
+      if (url.includes('drive.google.com/open?id=')) {
+        const id = url.split('open?id=')[1].split('&')[0];
+        return `https://drive.google.com/uc?export=view&id=${id}`;
+      }
+      if (url.includes('drive.google.com') && url.includes('/d/')) {
+        const id = url.split('/d/')[1].split('/')[0];
+        return `https://drive.google.com/uc?export=view&id=${id}`;
+      }
+      return url;
+    }
+
+    async function loadAndRenderSites() {
+      // Get user's current location first
+      if (!navigator.geolocation) {
+        document.getElementById('swiper-wrapper').innerHTML = "<div style='color:#888;text-align:center;'>Geolocation not supported.</div>";
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        // Fetch data from Firestore
+        const querySnapshot = await getDocs(collection(db, "culturalSites"));
+        let sites = [];
+        querySnapshot.forEach((doc) => {
+          const site = doc.data();
+          if (site.lat && site.lng && site.imageUrl) {
+            const siteLat = parseFloat(site.lat);
+            const siteLng = parseFloat(site.lng);
+            const distance = getDistance(userLat, userLng, siteLat, siteLng);
+            sites.push({
+              ...site,
+              distance,
+              imageUrl: fixImageUrl(site.imageUrl)
+            });
+          }
+        });
+        // Sort sites by distance
+        sites.sort((a, b) => a.distance - b.distance);
+
+        const swiperWrapper = document.getElementById('swiper-wrapper');
+        swiperWrapper.innerHTML = '';
+        if (!sites.length) {
+          swiperWrapper.innerHTML = '<div style="text-align:center;color:#888;">No sites found!</div>';
+        } else {
+          sites.forEach(site => {
+            const slide = document.createElement('div');
+            slide.className = "swiper-slide";
+            slide.innerHTML = `
+              <img class="site-image" src="${site.imageUrl}" alt="">
+              <div class="distance-label">${site.distance.toFixed(1)} km away</div>
+              <div class="site-title">${site.name || ''}</div>
+            `;
+            swiperWrapper.appendChild(slide);
+          });
+          new Swiper('.swiper-container', {
+            loop: true,
+            centeredSlides: true,
+            slidesPerView: 1,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          });
+        }
+      }, (err) => {
+        document.getElementById('swiper-wrapper').innerHTML = "<div style='color:#888;text-align:center;'>Unable to get your location.</div>";
+      });
+    }
+
+    loadAndRenderSites();
+  </script>
+</body>
+</html>

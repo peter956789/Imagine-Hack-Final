@@ -1,0 +1,329 @@
+:root {
+  --primary: #FFC000;
+  --secondary: #3498db;
+  --light: #f8f9fa;
+  --dark: #333;
+  --gray: #ddd;
+  --white: #fff;
+  --shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.header p {
+  margin: 0.5rem 0 0;
+  opacity: 0.9;
+}
+
+/* Map Container */
+#map-container {
+  display: flex;
+  height: calc(100vh - 100px);
+  min-height: 400px;
+}
+
+#map {
+  flex: 1 1 0%;
+  min-width: 0;
+  min-height: 400px;
+  height: 100%;
+}
+
+/* Sidebar */
+#sidebar {
+  flex: 1;
+  max-width: 100px;
+  background: var(--light);
+  padding: 1rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--gray);
+}
+
+#sidebar h2 {
+  margin: 0 0 1rem;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+/* Search */
+#sidebar {
+  flex: 0 0 180px;
+  max-width: 180px;
+  background: var(--light);
+  padding: 0.5rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--gray);
+}
+
+#search-container {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+#site-search {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.3rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px 0 0 4px;
+}
+
+#search-btn {
+  flex: 0 0 auto;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.site-item h3 {
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+/* Site List */
+#site-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.site-item {
+  padding: 0.8rem;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.site-item:hover {
+  border-color: var(--secondary);
+  box-shadow: var(--shadow);
+}
+
+.site-item h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+}
+
+.site-item p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Info Panel */
+#site-info {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 300px;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+#site-info.hidden {
+  display: none;
+}
+
+#close-info {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+}
+
+#info-title {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+}
+
+#info-image {
+  width: 100%;
+  height: 150px;
+  background: #eee;
+  margin: 0.5rem 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+}
+
+#info-description {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+#site-info p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+#info-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* Legend */
+.legend {
+  background: var(--white);
+  padding: 0.8rem;
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.legend h4 {
+  margin: 0 0 0.5rem;
+}
+
+.legend i {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #map-container {
+    flex-direction: column;
+  }
+  
+  #map {
+    height: 60vh;
+  }
+  
+  #sidebar {
+    max-width: none;
+    height: 40vh;
+  }
+  
+  #site-info {
+    width: calc(100% - 3rem);
+  }
+}
+
+/* --- POPUP AND FLIP CARD --- */
+.leaflet-popup-content-wrapper {
+  width: 135px !important;
+  max-width: none !important;
+  padding: 0 !important;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: transparent !important;
+  background: #ffc00f !important;    
+  color: #ffc00f !important;            
+}
+
+.leaflet-popup-content {
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: center;
+  background: transparent !important;
+}
+
+.custom-popup img {
+  width: 100%;
+  height: 500px;
+  display: block;
+  margin: 0 auto 1rem auto;
+  border-radius: 10px;
+  background: #ffc00f;
+}
+
+/* Flip card effect for custom-popup image+description */
+.custom-popup .flip-card {
+  width: 100%;
+  aspect-ratio: 4/3;
+  max-height: 210px;
+  perspective: 1200px;
+  margin-bottom: 10px;
+  position: relative;
+  min-height: 140px;
+  height: 210px;
+}
+.custom-popup .flip-card-back .description {
+  font-size: 0.1rem;
+}
+
+.custom-popup .flip-card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.custom-popup .flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.custom-popup .flip-card-front,
+.custom-popup .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.custom-popup .flip-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.custom-popup .flip-card-back {
+  background: #fff;
+  color: #222;
+  transform: rotateY(180deg);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 8px 8px 8px;
+  font-size: 0.97rem;
+}
+
+.custom-popup .description {
+  color: #3498db;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Malaysia Cultural Sites</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="map.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <div class="header">
+    <h1>MENEROKA</h1>
+    <button id="collection-btn" style="position:absolute;top:1.5rem;left: 1.5rem;padding:0.5rem 1rem;border-radius:6px;border:none;background:#3498db;color:#fff;font-weight:bold;cursor:pointer;z-index:999;">My Collection</button>
+    <button id="discover-btn" style="position:absolute;top:4rem;left:1.5rem;padding:0.5rem 1rem;border-radius:6px;border:none;background:#27ae60;color:#fff;font-weight:bold;cursor:pointer;z-index:999;">Discover</button>
+    <button id="adventure-btn" style="position:absolute;top:4rem;left:7.5rem;padding:0.5rem 1rem;border-radius:6px;border:none;background:#cc0000;color:#fff;font-weight:bold;cursor:pointer;z-index:999;">Adventure</button>
+    <p>Explore Malaysia's past through Modern eyes.</p>
+  </div>
+  <div id="map-container">
+    <div id="map"></div>
+    <div id="sidebar">
+      <h2>Sites</h2>
+      <div id="search-container">
+        <input type="text" id="site-search" placeholder="Search sites...">
+        <button id="search-btn">Search</button>
+      </div>
+      <div id="site-list"></div>
+    </div>
+  </div>
+  <!-- Info panel -->
+  <div id="site-info" class="hidden">
+    <button id="close-info">&times;</button>
+    <h3 id="info-title"></h3>
+    <div id="info-image"></div>
+    <div id="info-description"></div>
+    <p><b>Location:</b> <span id="info-location"></span></p>
+    <p><b>Year:</b> <span id="info-year"></span></p>
+    <p><b>UNESCO:</b> <span id="info-unesco"></span></p>
+    <a id="info-link" href="#" target="_blank">More Info</a>
+  </div>
+  <!-- Status/Geofence notification -->
+  <div id="status" style="position:fixed;top:10px;right:10px;z-index:1000;background:white;padding:10px;border-radius:5px;box-shadow:0 0 10px rgba(0,0,0,0.2);"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="map.js"></script>
+ 
+</body>
+</html>
