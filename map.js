@@ -119,6 +119,45 @@ function createPopupContent(site) {
   `;
 }
 
+// --- POPUP HANDLING: BEGIN ---
+function showCardUnlockPopup(site) {
+  let popup = document.getElementById('card-unlock-popup');
+  // If not present in HTML, create it (so it always works)
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = 'card-unlock-popup';
+    popup.style.position = 'fixed';
+    popup.style.top = '0';
+    popup.style.left = '0';
+    popup.style.width = '100vw';
+    popup.style.height = '100vh';
+    popup.style.background = 'rgba(0,0,0,0.5)';
+    popup.style.zIndex = 3000;
+    popup.style.display = 'flex';
+    popup.style.justifyContent = 'center';
+    popup.style.alignItems = 'center';
+    document.body.appendChild(popup);
+  }
+  popup.innerHTML = `
+    <div style="background: #fffbea; border-radius: 14px; box-shadow: 0 8px 32px rgba(52,152,219,0.16); display: flex; flex-direction: column; align-items: center; padding: 2rem 1.5rem 1.5rem 1.5rem; max-width: 340px; width: 92vw; position: relative;">
+      <img id="card-unlock-img" src="${fixImageUrl(site.imageUrl) || ''}" alt="New Card" style="width: 180px; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 1.1rem; background: #eee; box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+      <div id="card-unlock-name" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.7rem; color: #222; text-align: center;">${site.name || ''}</div>
+      <div class="card-unlock-msg" style="color: #b88400; font-size: 1.05rem; margin-bottom: 1rem; text-align: center; font-weight: 500;">You unlocked a new card!</div>
+      <button id="card-unlock-close" style="padding: 0.4rem 1.5rem; background: #3498db; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem;">Close</button>
+    </div>
+  `;
+  popup.style.display = 'flex';
+  // Close logic
+  popup.onclick = function(e) {
+    if (e.target.id === 'card-unlock-popup' || e.target.id === 'card-unlock-close') {
+      popup.style.display = 'none';
+    }
+  };
+}
+// (Optional: expose for debugging in window)
+// window.showCardUnlockPopup = showCardUnlockPopup;
+// --- POPUP HANDLING: END ---
+
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371000;
   const φ1 = lat1 * Math.PI / 180;
@@ -132,6 +171,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
+// Only this function is modified for collection!
 function checkGeofences(position) {
   const userLat = position.coords.latitude;
   const userLng = position.coords.longitude;
@@ -160,6 +200,19 @@ function checkGeofences(position) {
         currentGeofence = fence.id;
         statusElement.innerHTML = `Entered ${fence.name} area`;
         fence.circle.setStyle({ color: '#4eff00', fillColor: '#4eff00' });
+
+        // --- COLLECT THE SITE (localStorage) ---
+        let collected = JSON.parse(localStorage.getItem('collectedSites') || '[]');
+        if (!collected.includes(fence.id)) {
+          collected.push(fence.id);
+          localStorage.setItem('collectedSites', JSON.stringify(collected));
+          // --- POPUP: show card unlock ---
+          if (fence.site) {
+            showCardUnlockPopup(fence.site);
+          }
+        }
+        // --- END COLLECT ---
+
         setTimeout(() => {
           fence.circle.setStyle({ color: '#FFC000', fillColor: '#FFC000' });
         }, 2000);
@@ -239,7 +292,8 @@ function renderSites(sites) {
         id: site.id,
         name: site.name,
         circle: circle,
-        marker: marker
+        marker: marker,
+        site: site // <--- Attach the site object for popup use
       });
     }
   });

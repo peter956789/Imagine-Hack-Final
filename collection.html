@@ -17,10 +17,10 @@
     }
     .collection-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 1.2rem;
       padding: 2rem;
-      max-width: 700px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .collection-card {
@@ -36,12 +36,13 @@
       padding: 0.5rem 0.5rem 1rem 0.5rem;
     }
     .collection-card img {
-      width: 120px;
-      height: 120px;
+      width: 350px;
+      height: 540px;
       object-fit: cover;
       border-radius: 12px;
       background: #eee;
       margin-bottom: 0.7rem;
+      transition: opacity 0.2s, filter 0.2s;
     }
     .collection-count {
       text-align: center;
@@ -77,15 +78,30 @@
       cursor: pointer;
       z-index: 999;
     }
+    .reset-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 999;
+    }
     @media (max-width: 600px) {
       .collection-grid {padding: 1rem;}
       .collection-header {font-size: 1.3rem;}
-      .collection-card img {width: 80px;height: 80px;}
+      .collection-card img {width: 120px;height: 180px;}
+      .collection-grid {grid-template-columns: 1fr;}
     }
   </style>
 </head>
 <body>
  <button class="back-btn" onclick="window.location.href='map.html'">&larr; Back</button>
+ <button class="reset-btn" onclick="resetCollection()">Reset Collection</button>
   <div class="collection-header">My Site Card Collection</div>
   <div class="collection-count" id="collection-count"></div>
   <div class="collection-grid" id="collection-grid">
@@ -143,8 +159,8 @@
     function renderCards(sites) {
       const grid = document.getElementById('collection-grid');
       const count = document.getElementById('collection-count');
-      // Simulate collected: none collected
-      let collectedIds = []; // Empty array for demo: 0 collected
+      // Use actual collected cards from localStorage
+      let collectedIds = JSON.parse(localStorage.getItem('collectedSites') || '[]');
       count.textContent = `${collectedIds.length}/${sites.length} collected`;
       grid.innerHTML = '';
       for (const site of sites) {
@@ -156,6 +172,13 @@
             ${collected ? `<span class="collected-badge">Collected</span>` : ''}
           </div>
         `;
+      }
+    }
+
+    window.resetCollection = function() {
+      if (confirm("Are you sure you want to reset your collection?")) {
+        localStorage.removeItem('collectedSites');
+        renderCollection();
       }
     }
 
