@@ -13,5 +13,5 @@ CHALLENGE AND APPROACH: Challenge 1: Digital Heritage and Tourism
 We made travelling like collecting cards. A way to immortalize the places we travelled and presevere the heritage while people engage in fun and happiness. So we took inspiration from card collection to create something unique and memeorable.
 
 Usage Instructions (if needed)(could be demo/screenshots)
-Download all 9 files and run map.hmtl
+Download all 9 files and run map.html as live server
 
