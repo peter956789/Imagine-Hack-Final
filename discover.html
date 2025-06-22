@@ -33,7 +33,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Haversine formula to calculate distance in km
+    //Haversine thingyyyy
     function getDistance(lat1, lon1, lat2, lon2) {
       const R = 6371;
       const dLat = (lat2-lat1) * Math.PI/180;
@@ -63,7 +63,6 @@
     }
 
     async function loadAndRenderSites() {
-      // Get user's current location first
       if (!navigator.geolocation) {
         document.getElementById('swiper-wrapper').innerHTML = "<div style='color:#888;text-align:center;'>Geolocation not supported.</div>";
         return;
@@ -71,7 +70,6 @@
       navigator.geolocation.getCurrentPosition(async (position) => {
         const userLat = position.coords.latitude;
         const userLng = position.coords.longitude;
-        // Fetch data from Firestore
         const querySnapshot = await getDocs(collection(db, "culturalSites"));
         let sites = [];
         querySnapshot.forEach((doc) => {
@@ -87,7 +85,6 @@
             });
           }
         });
-        // Sort sites by distance
         sites.sort((a, b) => a.distance - b.distance);
 
         const swiperWrapper = document.getElementById('swiper-wrapper');

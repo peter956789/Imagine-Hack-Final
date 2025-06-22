@@ -69,29 +69,24 @@ const fenceCircles = [];
 let userMarker = null;
 let userAccuracyCircle = null;
 let currentGeofence = null;
-const geofenceRadius = 500; // meters
+const geofenceRadius = 500; 
 
 let allSites = [];
 const markers = {};
 
-// Improved image URL fixer for Google Drive and Firebase Storage
 function fixImageUrl(url) {
   if (!url) return null;
-  // Google Drive - /file/d/ID/view
   if (url.includes('/file/d/')) {
     return url.replace('/file/d/', '/uc?export=view&id=').split('/view')[0];
   }
-  // Google Drive - open?id=ID
   if (url.includes('drive.google.com/open?id=')) {
     const id = url.split('open?id=')[1].split('&')[0];
     return `https://drive.google.com/uc?export=view&id=${id}`;
   }
-  // Google Drive - /d/ID/
   if (url.includes('drive.google.com') && url.includes('/d/')) {
     const id = url.split('/d/')[1].split('/')[0];
     return `https://drive.google.com/uc?export=view&id=${id}`;
   }
-  // Firebase Storage or direct image link
   return url;
 }
 
@@ -119,10 +114,10 @@ function createPopupContent(site) {
   `;
 }
 
-// --- POPUP HANDLING: BEGIN ---
+
 function showCardUnlockPopup(site) {
   let popup = document.getElementById('card-unlock-popup');
-  // If not present in HTML, create it (so it always works)
+
   if (!popup) {
     popup = document.createElement('div');
     popup.id = 'card-unlock-popup';
@@ -147,16 +142,15 @@ function showCardUnlockPopup(site) {
     </div>
   `;
   popup.style.display = 'flex';
-  // Close logic
+
   popup.onclick = function(e) {
     if (e.target.id === 'card-unlock-popup' || e.target.id === 'card-unlock-close') {
       popup.style.display = 'none';
     }
   };
 }
-// (Optional: expose for debugging in window)
-// window.showCardUnlockPopup = showCardUnlockPopup;
-// --- POPUP HANDLING: END ---
+
+// POPUP HANDLING
 
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371000;
@@ -171,7 +165,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// Only this function is modified for collection!
+
 function checkGeofences(position) {
   const userLat = position.coords.latitude;
   const userLng = position.coords.longitude;
@@ -201,18 +195,15 @@ function checkGeofences(position) {
         statusElement.innerHTML = `Entered ${fence.name} area`;
         fence.circle.setStyle({ color: '#4eff00', fillColor: '#4eff00' });
 
-        // --- COLLECT THE SITE (localStorage) ---
+        // localStorage
         let collected = JSON.parse(localStorage.getItem('collectedSites') || '[]');
         if (!collected.includes(fence.id)) {
           collected.push(fence.id);
           localStorage.setItem('collectedSites', JSON.stringify(collected));
-          // --- POPUP: show card unlock ---
           if (fence.site) {
             showCardUnlockPopup(fence.site);
           }
         }
-        // --- END COLLECT ---
-
         setTimeout(() => {
           fence.circle.setStyle({ color: '#FFC000', fillColor: '#FFC000' });
         }, 2000);
@@ -293,7 +284,7 @@ function renderSites(sites) {
         name: site.name,
         circle: circle,
         marker: marker,
-        site: site // <--- Attach the site object for popup use
+        site: site 
       });
     }
   });
@@ -316,14 +307,12 @@ function displaySiteList(sites) {
         map.setView([parseFloat(site.lat), parseFloat(site.lng)], 13);
         if (markers[site.id]) markers[site.id].openPopup();
       }
-      // If you want to show the sidebar info panel, uncomment the next line:
-      // showSiteInfo(site);
     });
     siteList.appendChild(siteItem);
   });
 }
 
-// Search utility
+// Austin
 function searchSites() {
   const searchTerm = document.getElementById('site-search').value.toLowerCase();
   if (!searchTerm) {

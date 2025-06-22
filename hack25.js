@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Heritage Sites Data
     const heritageSites = [
         {
             id: 1,
@@ -132,9 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     
-// COMPLETE MALAYSIAN CULTURAL EVENTS DATA
     const CulturalEvents = [
-        // January
         {
             id: 1,
             name: "New Year's Day",
@@ -154,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "indian"
         },
 
-        // February
         {
             id: 3,
             name: "Chinese New Year",
@@ -174,7 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "chinese"
         },
 
-        // March
         {
             id: 5,
             name: "Awal Muharram (Islamic New Year)",
@@ -185,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "islamic"
         },
 
-        // April
+
         {
             id: 6,
             name: "Good Friday",
@@ -205,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "sikh"
         },
 
-        // May
+
         {
             id: 8,
             name: "Labour Day",
@@ -225,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "buddhist"
         },
 
-        // June
+  
         {
             id: 10,
             name: "Agong's Birthday",
@@ -254,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "borneo"
         },
 
-        // July
+  
         {
             id: 13,
             name: "Georgetown World Heritage Day",
@@ -265,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "cultural"
         },
 
-        // August
+    
         {
             id: 14,
             name: "National Day (Hari Merdeka)",
@@ -276,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "national"
         },
 
-        // September
         {
             id: 15,
             name: "Malaysia Day",
@@ -296,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "chinese"
         },
 
-        // October
+     
         {
             id: 17,
             name: "Deepavali",
@@ -307,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "indian"
         },
 
-        // November
+
         {
             id: 18,
             name: "Prophet Muhammad's Birthday",
@@ -318,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "islamic"
         },
 
-        // December
+       
         {
             id: 19,
             name: "Christmas Day",
@@ -338,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "national"
         },
 
-        // Islamic Holidays (dates vary each year)
+       
         {
             id: 21,
             name: "Ramadan Begins",
@@ -385,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "national"
         },
     ];
-    // Events Data
+  
     const culturalEvents = [
         
         {
@@ -487,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "borneo"
         },
 
-        // July
+    
         {
             id: 13,
             name: "Georgetown World Heritage Day",
@@ -498,7 +492,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "cultural"
         },
 
-        // August
+    
         {
             id: 14,
             name: "National Day (Hari Merdeka)",
@@ -536,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "indian"
         },
 
-        // November
+       
         {
             id: 18,
             name: "Prophet Muhammad's Birthday",
@@ -548,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
     ];
 
-    // Recipes Data
+  
     const traditionalRecipes = [
         {
             id: 1,
@@ -656,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
-    // Language Phrases Data
+    
     const languagePhrases = {
         malay: [
             { phrase: "Selamat pagi", meaning: "Good morning" },
@@ -692,7 +686,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    // Language Quiz Questions
+   
     const languageQuizzes = {
         malay: [
             {
@@ -764,12 +758,12 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    // Current date for calendar
+ 
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
 
-    // Initialize the app
+  
     function init() {
         displayHeritageSites(heritageSites);
         setupEventListeners();
@@ -779,7 +773,6 @@ document.addEventListener('DOMContentLoaded', function() {
         displayLanguageContent('malay');
     }
 
-    // Display heritage sites
     function displayHeritageSites(sites) {
         const container = document.getElementById('sites-container');
         container.innerHTML = '';
@@ -794,14 +787,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>${site.description}</p>
                     <p><strong>Location:</strong> ${capitalizeFirstLetter(site.location)}</p>
                     <p><strong>Rating:</strong> ${site.rating}/5</p>
-                    <a href="#" class="btn">Learn More</a>
+                    
                 </div>
             `;
             container.appendChild(card);
         });
     }
 
-    // Display recipes
+ 
     function displayRecipes(recipes) {
         const container = document.getElementById('recipes-container');
         container.innerHTML = '';
@@ -821,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(card);
         });
 
-        // Add event listeners to recipe buttons
+      
         document.querySelectorAll('.view-recipe-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -832,7 +825,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Show recipe modal
+ 
     function showRecipeModal(recipe) {
         const modal = document.getElementById('recipe-modal');
         const title = document.getElementById('modal-recipe-title');
@@ -861,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'block';
     }
 
-    // Generate calendar
+  
     function generateCalendar(month, year) {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
@@ -872,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const calendarGrid = document.getElementById('calendar-grid');
         calendarGrid.innerHTML = '';
         
-        // Add day headers
+      
         const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         dayNames.forEach(day => {
             const dayElement = document.createElement('div');
@@ -881,20 +874,20 @@ document.addEventListener('DOMContentLoaded', function() {
             calendarGrid.appendChild(dayElement);
         });
         
-        // Add empty cells for days before the first day of the month
+        
         for (let i = 0; i < firstDay; i++) {
             const emptyCell = document.createElement('div');
             emptyCell.className = 'calendar-day';
             calendarGrid.appendChild(emptyCell);
         }
         
-        // Add days of the month
+       
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = document.createElement('div');
             dayElement.className = 'calendar-day';
             dayElement.textContent = day;
             
-            // Check if this day has any events
+           
             const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
             const hasEvent = culturalEvents.some(event => event.date === dateStr);
             
@@ -909,7 +902,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Display events for a specific month
+   
     function displayEventsForMonth(month, year) {
         const monthStr = (month + 1).toString().padStart(2, '0');
         const eventsThisMonth = culturalEvents.filter(event => {
@@ -920,13 +913,13 @@ document.addEventListener('DOMContentLoaded', function() {
         displayEvents(eventsThisMonth);
     }
 
-    // Display events for a specific date
+    
     function displayEventsForDate(dateStr) {
         const eventsOnDate = culturalEvents.filter(event => event.date === dateStr);
         displayEvents(eventsOnDate);
     }
 
-    // Display events in the events list
+    
     function displayEvents(events) {
         const container = document.getElementById('events-list');
         container.innerHTML = '';
@@ -952,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Display language content
+    
     function displayLanguageContent(language) {
         const phrasesContainer = document.getElementById('phrases-list');
         phrasesContainer.innerHTML = '';
@@ -967,11 +960,11 @@ document.addEventListener('DOMContentLoaded', function() {
             phrasesContainer.appendChild(phraseElement);
         });
         
-        // Set up quiz for this language
+ 
         setupLanguageQuiz(language);
     }
 
-    // Set up language quiz
+  
     function setupLanguageQuiz(language) {
         const quiz = languageQuizzes[language];
         let currentQuestion = 0;
@@ -982,7 +975,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const feedbackContainer = document.getElementById('quiz-feedback');
             
             if (currentQuestion >= quiz.length) {
-                // Quiz completed
+               
                 questionContainer.textContent = "Quiz completed! Well done!";
                 optionsContainer.innerHTML = '';
                 feedbackContainer.textContent = '';
@@ -1043,9 +1036,8 @@ document.addEventListener('DOMContentLoaded', function() {
         displayQuestion();
     }
 
-    // Set up event listeners
     function setupEventListeners() {
-        // Heritage sites search and filter
+    
         document.getElementById('search-btn').addEventListener('click', searchHeritageSites);
         document.getElementById('site-search').addEventListener('keyup', function(e) {
             if (e.key === 'Enter') searchHeritageSites();
@@ -1054,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('state-filter').addEventListener('change', filterHeritageSites);
         document.getElementById('category-filter').addEventListener('change', filterHeritageSites);
         
-        // Calendar navigation
+    
         document.getElementById('prev-month').addEventListener('click', function() {
             currentMonth--;
             if (currentMonth < 0) {
@@ -1075,7 +1067,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayEventsForMonth(currentMonth, currentYear);
         });
         
-        // Recipe category filter
+      
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -1091,7 +1083,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Language tabs
+      
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1100,12 +1092,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Close modal
+       
         document.querySelector('.close-btn').addEventListener('click', function() {
             document.getElementById('recipe-modal').style.display = 'none';
         });
         
-        // Close modal when clicking outside
+    
         window.addEventListener('click', function(e) {
             const modal = document.getElementById('recipe-modal');
             if (e.target === modal) {
@@ -1114,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Search heritage sites
+ 
     function searchHeritageSites() {
         const searchTerm = document.getElementById('site-search').value.toLowerCase();
         const filteredSites = heritageSites.filter(site => 
@@ -1124,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         displayHeritageSites(filteredSites);
     }
 
-    // Filter heritage sites
+   
     function filterHeritageSites() {
         const state = document.getElementById('state-filter').value;
         const category = document.getElementById('category-filter').value;
@@ -1142,7 +1134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         displayHeritageSites(filteredSites);
     }
 
-    // Helper functions
+    
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -1152,6 +1144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Date(dateStr).toLocaleDateString('en-US', options);
     }
 
-    // Initialize the app
+   
     init();
 });
